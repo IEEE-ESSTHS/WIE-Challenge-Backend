@@ -15,7 +15,16 @@ const kidSchema = mongoose.Schema({
     type: Number,
     required: true,
     default: 6
-  }
+  },
+  tasks: [
+    {
+      task: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Task'
+      }
+    }
+  ]
 }, {
   timestamps: true
 })

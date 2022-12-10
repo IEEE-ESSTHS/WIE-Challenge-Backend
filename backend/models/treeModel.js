@@ -11,7 +11,7 @@ const treeSchema = mongoose.Schema({
     required: true,
     default: 100
   },
-  species: {
+  specie: {
     type: String,
     required: true,
     enum: ['Normal', 'Grenadier', 'Olivier']

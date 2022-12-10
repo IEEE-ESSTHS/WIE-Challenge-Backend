@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import asyncHandler from 'express-async-handler'
-import Teacher from '../models/teacherModel'
-import Kid from '../models/kidModel'
+import Teacher from '../models/teacherModel.js'
+import Kid from '../models/kidModel.js'
 
 const protect = asyncHandler(async (req, res, next) => {
   let token

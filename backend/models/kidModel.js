@@ -4,6 +4,7 @@ const kidSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
+    unique: true,
     minLength: [4, 'Minimum name length must be 4 characters']
   },
   picture: {

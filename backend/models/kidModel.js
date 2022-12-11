@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { mongo } from 'mongoose'
 
 const kidSchema = mongoose.Schema({
   name: {
@@ -15,6 +15,11 @@ const kidSchema = mongoose.Schema({
     type: Number,
     required: true,
     default: 6
+  },
+  level: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'Level'
   },
   tasks: [
     {

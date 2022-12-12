@@ -21,6 +21,11 @@ const kidSchema = mongoose.Schema({
     required: true,
     ref: 'Level'
   },
+  points: {
+    type: Number,
+    required: true,
+    default: 0
+  },
   tasks: [
     {
       task: {

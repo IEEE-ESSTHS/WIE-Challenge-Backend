@@ -93,7 +93,7 @@ const updateTask = asyncHandler(async (req, res) => {
   }
 })
 
-export default {
+export {
   getTasks,
   getTaskById,
   createTask,

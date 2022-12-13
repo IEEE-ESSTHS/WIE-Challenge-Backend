@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 import asyncHandler from 'express-async-handler'
 import Teacher from '../models/teacherModel.js'
 import Kid from '../models/kidModel.js'
+import Admin from '../models/adminModel.js'
 
 const protect = asyncHandler(async (req, res, next) => {
   let token
@@ -69,7 +70,28 @@ const protectKid = asyncHandler(async (req, res, next) => {
   }
 })
 
+const admin = asyncHandler(async (req, res, next) => {
+  let token
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    try {
+      token = req.headers.authorization.split(' ')[1]
+      const decoded = jwt.verify(token, process.env.JWT_SECRET)
+      req.user = await Admin.findById(decoded.id)
+      next()
+    } catch (error) {
+      console.error(error)
+      res.status(401)
+      throw new Error('Not authorized, token failed')
+    }
+  }
+  if (!token) {
+    res.status(401)
+    throw new Error('Not authorized, no token')
+  }
+})
+
 export {
   protect,
-  protectKid
+  protectKid,
+  admin
 }

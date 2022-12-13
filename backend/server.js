@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import colors from 'colors'
 import {notFound, errorHandler} from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
+import kidRoutes from './routes/kidRoutes.js'
 import levelRoutes from './routes/levelRoutes.js'
 import taskRoutes from './routes/taskRoutes.js'
 import teacherRoutes from './routes/teacherRoutes.js'
@@ -15,6 +16,7 @@ connectDB()
 const app = express()
 app.use(express.json())
 
+app.use('/api/kids', kidRoutes)
 app.use('/api/levels', levelRoutes)
 app.use('/api/tasks', taskRoutes)
 app.use('/api/teachers', teacherRoutes)

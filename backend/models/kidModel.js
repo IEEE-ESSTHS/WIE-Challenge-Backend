@@ -17,9 +17,9 @@ const kidSchema = mongoose.Schema({
     default: 6
   },
   level: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Number,
     required: true,
-    ref: 'Level'
+    default: 0
   },
   points: {
     type: Number,

@@ -80,9 +80,9 @@ const updateClassroom = asyncHandler(async (req, res) => {
 })
 
 const getClassroomKids = asyncHandler(async (req, res) => {
-  const classroom = await Classroom.findById(req.params.id).populate('kid')
+  const classroom = await Classroom.findById(req.params.id).populate('kids')
   if (classroom) {
-    res.json(classroom.kid)
+    res.json(classroom.kids)
   } else {
     res.status(404)
     throw new Error('Classroom was not found')
@@ -136,6 +136,26 @@ const removeKidFromClassroom = asyncHandler(async (req, res) => {
   }
 })
 
+const getTeacherClassrooms = asyncHandler(async (req, res) => {
+  const count = await Classroom.countDocuments({teacher: req.user._id})
+  const classrooms = await Classroom.find({teacher: req.user._id})
+
+  res.json({
+    count,
+    classrooms
+  })
+})
+
+const getKidClassrooms = asyncHandler(async (req, res) => {
+  const count = await Classroom.countDocuments({kids: {kid: req.user._id}})
+  const classrooms = await Classroom.find({kids: {kid: req.user._id}})
+
+  res.json({
+    count,
+    classrooms
+  })
+})
+
 export {
   getClassrooms,
   getClassroomById,
@@ -144,5 +164,7 @@ export {
   updateClassroom,
   getClassroomKids,
   addKidToClassroom,
-  removeKidFromClassroom
+  removeKidFromClassroom,
+  getTeacherClassrooms,
+  getKidClassrooms
 }

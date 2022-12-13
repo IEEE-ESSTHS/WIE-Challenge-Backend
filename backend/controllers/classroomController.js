@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import Classroom from '../models/classroomModel.js'
+import Kid from '../models/kidModel.js'
 
 const getClassrooms = asyncHandler(async (req, res) => {
   const count = await Classroom.countDocuments({})
@@ -78,10 +79,70 @@ const updateClassroom = asyncHandler(async (req, res) => {
   }
 })
 
+const getClassroomKids = asyncHandler(async (req, res) => {
+  const classroom = await Classroom.findById(req.params.id).populate('kid')
+  if (classroom) {
+    res.json(classroom.kid)
+  } else {
+    res.status(404)
+    throw new Error('Classroom was not found')
+  }
+})
+
+const addKidToClassroom = asyncHandler(async (req, res) => {
+  const classroom = await Classroom.findById(req.params.id)
+  if (classroom) {
+    const kid = await Kid.findById(req.body.kidId)
+
+    const alreadyAdded = classroom.kids.find(k => k.kid.toString() === kidId.toString())
+    if (alreadyAdded) {
+      res.status(400)
+      throw new Error('Kid already in classroom')
+    }
+
+    if (kid) {
+      classroom.kid.push(kid)
+      const updatedClassroom = await classroom.save()
+      res.json(updatedClassroom)
+    } else {
+      res.status(401)
+      throw new Error('Kid was not found')
+    }
+  } else {
+    res.status(404)
+    throw new Error('Classroom was not found')
+  }
+})
+
+const removeKidFromClassroom = asyncHandler(async (req, res) => {
+  const classroom = await Classroom.findById(req.user._id)
+  if (classroom) {
+    const kid = classroom.kids.find(k => k.kid.toString() === req.query.id.toString())
+
+    if (kid) {
+      classroom.kid.pull({_id: kid._id})
+      await classroom.save()
+
+      res.status(201).json({
+        message: 'Kid removed from classroom!'
+      })
+    } else {
+      res.status(404)
+      throw new Error('Kid not found')
+    }
+  } else {
+    res.status(404)
+    throw new Error('Classroom not found')
+  }
+})
+
 export {
   getClassrooms,
   getClassroomById,
   createClassroom,
   deleteClassroom,
-  updateClassroom
+  updateClassroom,
+  getClassroomKids,
+  addKidToClassroom,
+  removeKidFromClassroom
 }

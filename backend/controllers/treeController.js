@@ -11,7 +11,7 @@ const getTrees = asyncHandler(async (req, res) => {
   })
 })
 
-const getTreeById = asyncHandler(async (req, res) => {
+const getTreeBySpecie = asyncHandler(async (req, res) => {
   const tree = await Tree.findOne({specie: req.params.specie})
 
   if (tree) {
@@ -89,7 +89,7 @@ const updateTree = asyncHandler(async (req, res) => {
 
 export {
   getTrees,
-  getTreeById,
+  getTreeBySpecie,
   createTree,
   deleteTree,
   updateTree

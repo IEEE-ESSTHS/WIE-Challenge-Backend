@@ -7,6 +7,12 @@
   "author": "Fedi Nabli",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "start": "node backend/server",
+    "dev": "nodemon backend/server",
+    "data:import": "node backend/seeder",
+    "data:destroy": "node backend/seeder -d"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",

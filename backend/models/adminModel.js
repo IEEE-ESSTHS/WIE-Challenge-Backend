@@ -35,6 +35,6 @@ adminSchema.pre('save', async function(next) {
   this.password = await bcrypt.hash(this.password, salt)
 })
 
-const Teacher = mongoose.model('Teacher', adminSchema)
+const Admin = mongoose.model('Admin', adminSchema)
 
-export default Teacher
+export default Admin
